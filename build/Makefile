@@ -283,6 +283,19 @@ gtest_main/fast:
 .PHONY : gtest_main/fast
 
 #=============================================================================
+# Target rules for targets named arm_controller
+
+# Build rule for target.
+arm_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 arm_controller
+.PHONY : arm_controller
+
+# fast build rule for target.
+arm_controller/fast:
+	$(MAKE) -f arm_controller/CMakeFiles/arm_controller.dir/build.make arm_controller/CMakeFiles/arm_controller.dir/build
+.PHONY : arm_controller/fast
+
+#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_py
 
 # Build rule for target.
@@ -694,6 +707,7 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... arm_controller"
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_py"

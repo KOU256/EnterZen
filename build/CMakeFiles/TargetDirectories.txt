@@ -33,6 +33,7 @@
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/edit_cache.dir
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/install/local.dir
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/install/strip.dir
+/home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/arm_controller.dir
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/geometry_msgs_generate_messages_py.dir
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir
 /home/kou256/ROS/EnterZen/build/arm_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir

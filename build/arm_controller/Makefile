@@ -166,6 +166,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+arm_controller/CMakeFiles/arm_controller.dir/rule:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f CMakeFiles/Makefile2 arm_controller/CMakeFiles/arm_controller.dir/rule
+.PHONY : arm_controller/CMakeFiles/arm_controller.dir/rule
+
+# Convenience name for target.
+arm_controller: arm_controller/CMakeFiles/arm_controller.dir/rule
+
+.PHONY : arm_controller
+
+# fast build rule for target.
+arm_controller/fast:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f arm_controller/CMakeFiles/arm_controller.dir/build.make arm_controller/CMakeFiles/arm_controller.dir/build
+.PHONY : arm_controller/fast
+
+# Convenience name for target.
 arm_controller/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
 	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f CMakeFiles/Makefile2 arm_controller/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
 .PHONY : arm_controller/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
@@ -615,6 +630,33 @@ sensor_msgs_generate_messages_eus/fast:
 	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f arm_controller/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make arm_controller/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
 .PHONY : sensor_msgs_generate_messages_eus/fast
 
+src/arm_controller.o: src/arm_controller.cpp.o
+
+.PHONY : src/arm_controller.o
+
+# target to build an object file
+src/arm_controller.cpp.o:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f arm_controller/CMakeFiles/arm_controller.dir/build.make arm_controller/CMakeFiles/arm_controller.dir/src/arm_controller.cpp.o
+.PHONY : src/arm_controller.cpp.o
+
+src/arm_controller.i: src/arm_controller.cpp.i
+
+.PHONY : src/arm_controller.i
+
+# target to preprocess a source file
+src/arm_controller.cpp.i:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f arm_controller/CMakeFiles/arm_controller.dir/build.make arm_controller/CMakeFiles/arm_controller.dir/src/arm_controller.cpp.i
+.PHONY : src/arm_controller.cpp.i
+
+src/arm_controller.s: src/arm_controller.cpp.s
+
+.PHONY : src/arm_controller.s
+
+# target to generate assembly for a file
+src/arm_controller.cpp.s:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f arm_controller/CMakeFiles/arm_controller.dir/build.make arm_controller/CMakeFiles/arm_controller.dir/src/arm_controller.cpp.s
+.PHONY : src/arm_controller.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -626,6 +668,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... install/strip"
+	@echo "... arm_controller"
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_py"
@@ -658,6 +701,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... diagnostic_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
+	@echo "... src/arm_controller.o"
+	@echo "... src/arm_controller.i"
+	@echo "... src/arm_controller.s"
 .PHONY : help
 
 
