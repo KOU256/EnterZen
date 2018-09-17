@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot name="arm">
+
+  <link name="base_link"/>
+
+  <link name="first_base">
+    <visual>
+      <geometry>
+        <mesh filename="package://arm_controller/meshs/first-base.stl"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="second_base">
+    <visual>
+      <geometry>
+        <mesh filename="package://arm_controller/meshs/second-base.stl"/>
+      </geometry>
+      <origin xyz = "0 0 0" rpy="0 0 0.2"/>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="first_arm">
+    <visual>
+      <geometry>
+        <mesh filename="package://arm_controller/meshs/first-arm.stl"/>
+      </geometry>
+      <origin xyz = "0 0 0" rpy="0.17 -0.03 0.16"/>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="second_arm">
+    <visual>
+      <geometry>
+        <mesh filename="package://arm_controller/meshs/second-arm.stl"/>
+      </geometry>
+      <origin xyz = "0.04 0 0" rpy="1.57 0 0"/>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="first_base"/>
+  </joint>
+  
+  <joint name="first_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <origin xyz = "0 0 0" />
+    <parent link="first_base"/>
+    <child link="second_base"/>
+    <limit effort="100" lower="-1.57" upper="1.57" velocity="100.0"/>
+  </joint>
+
+  <joint name="second_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <origin xyz = "0 0 0.05" />
+    <parent link="second_base"/>
+    <child link="first_arm"/>
+    <limit effort="100" lower="-1.57" upper="1.57" velocity="100.0"/>
+  </joint>
+
+  <joint name="third_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <origin xyz = "0 0 0.19" />
+    <parent link="first_arm"/>
+    <child link="second_arm"/>
+    <limit effort="100" lower="-1.57" upper="1.57" velocity="100.0"/>
+  </joint>
+
+</robot>
