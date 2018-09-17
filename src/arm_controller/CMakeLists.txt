@@ -197,3 +197,6 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(arm_controller src/arm_controller.cpp)
+target_link_libraries(arm_controller ${catkin_LIBRARIES})
