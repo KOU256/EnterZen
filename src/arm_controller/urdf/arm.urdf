@@ -44,7 +44,7 @@
       <geometry>
         <mesh filename="package://arm_controller/meshs/second-arm.stl"/>
       </geometry>
-      <origin xyz = "0.04 0 0" rpy="1.57 0 0"/>
+      <origin xyz = "0.04 0 0" rpy="1.57 3.14 0"/>
       <material name="black">
         <color rgba="0.0 0.0 0.0 2.0"/>
       </material>

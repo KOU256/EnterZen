@@ -65,15 +65,15 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 			first_joint_position += 0.1;
 			if (first_joint_position > 1.57) {first_joint_position = 1.57;}
 
-			target_first -= 20;
-			if (target_first < 45) {target_first = 45;} 
+			target_first += 20;
+			if (target_first > 971) {target_first = 971;} 
 		}
         else if(joy->axes[3] <= -0.5) {
 			first_joint_position -= 0.1;
 			if (first_joint_position < -3.14) {first_joint_position = -3.14;}
 
-			target_first += 20;
-			if (target_first > 971) {target_first = 971;}
+			target_first -= 20;
+			if (target_first < 45) {target_first = 45;}
 		}
 
 		// Rボタンが押されていないとき、右スティックの縦軸に合わせてsecond_jointを回転
@@ -93,16 +93,16 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 		}
 
 		// Rボタンが押されているとき、右スティックの縦軸に合わせてthird_jointを回転
-        if (joy->axes[4] >= 0.5 && joy->buttons[5] == 1) {
-			third_joint_position -= 0.1;
-			if (third_joint_position < -3.14) {third_joint_position = -3.14;}
+        if (joy->axes[7] >= 1.0 && joy->buttons[5] == 1) {
+			third_joint_position += 0.1;
+			if (third_joint_position > 0) {third_joint_position = 0;}
 
 			target_third += 20;
 			if (target_second > 971) {target_second = 971;}
 		}
-        else if(joy->axes[4] <= -0.5 && joy->buttons[5] == 1) {
-			third_joint_position += 0.1;
-			if (third_joint_position > 1.57) {third_joint_position = 1.57;}
+        else if(joy->axes[7] <= -1.0 && joy->buttons[5] == 1) {
+			third_joint_position -= 0.1;
+			if (third_joint_position < -5.71) {third_joint_position = 5.71;}
 
 			target_third -= 20;
 			if (target_second < 45) {target_second = 45;}
