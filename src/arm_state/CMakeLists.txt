@@ -9,6 +9,7 @@ project(arm_state)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   dynamixel_sdk
+  dynamixel_workbench
   roscpp
 )
 
