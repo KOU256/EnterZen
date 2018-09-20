@@ -7,7 +7,11 @@
 
 class ArmState {
 private:
+    int m_angle;
+    int m_position;
 public:
-}
+    int getAngle();
+    int getPosition();
+};
 
 #endif
