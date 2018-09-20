@@ -6,13 +6,17 @@
 
 #IncludeRegexTransform: 
 
+/home/kou256/ROS/EnterZen/src/arm_state/include/arm_state/arm_state.hpp
+
 /home/kou256/ROS/EnterZen/src/arm_state/src/arm_state.cpp
 iostream
 -
-ros/ros.h
--
 dynamixel_sdk/dynamixel_sdk.h
 -
+ros/ros.h
+-
+arm_state/arm_state.hpp
+/home/kou256/ROS/EnterZen/src/arm_state/src/arm_state/arm_state.hpp
 
 /opt/ros/kinetic/include/dynamixel_sdk/dynamixel_sdk.h
 group_bulk_read.h
