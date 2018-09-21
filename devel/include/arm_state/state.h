@@ -24,16 +24,21 @@ struct state_
   typedef state_<ContainerAllocator> Type;
 
   state_()
-    : position(0)
+    : id(0)
+    , position(0)
     , angle(0)  {
     }
   state_(const ContainerAllocator& _alloc)
-    : position(0)
+    : id(0)
+    , position(0)
     , angle(0)  {
   (void)_alloc;
     }
 
 
+
+   typedef uint8_t _id_type;
+  _id_type id;
 
    typedef uint16_t _position_type;
   _position_type position;
@@ -119,12 +124,12 @@ struct MD5Sum< ::arm_state::state_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "9a885ace4264c2a68f0fa7a276cc0f3d";
+    return "402d479cdb26ccff42ea9316f4bc75ef";
   }
 
   static const char* value(const ::arm_state::state_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x9a885ace4264c2a6ULL;
-  static const uint64_t static_value2 = 0x8f0fa7a276cc0f3dULL;
+  static const uint64_t static_value1 = 0x402d479cdb26ccffULL;
+  static const uint64_t static_value2 = 0x42ea9316f4bc75efULL;
 };
 
 template<class ContainerAllocator>
@@ -143,7 +148,8 @@ struct Definition< ::arm_state::state_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "uint16 position\n\
+    return "uint8 id\n\
+uint16 position\n\
 uint16 angle\n\
 ";
   }
@@ -163,6 +169,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
+      stream.next(m.id);
       stream.next(m.position);
       stream.next(m.angle);
     }
@@ -183,6 +190,8 @@ struct Printer< ::arm_state::state_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::arm_state::state_<ContainerAllocator>& v)
   {
+    s << indent << "id: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.id);
     s << indent << "position: ";
     Printer<uint16_t>::stream(s, indent + "  ", v.position);
     s << indent << "angle: ";

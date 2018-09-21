@@ -7,13 +7,14 @@ import struct
 
 
 class state(genpy.Message):
-  _md5sum = "9a885ace4264c2a68f0fa7a276cc0f3d"
+  _md5sum = "402d479cdb26ccff42ea9316f4bc75ef"
   _type = "arm_state/state"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """uint16 position
+  _full_text = """uint8 id
+uint16 position
 uint16 angle"""
-  __slots__ = ['position','angle']
-  _slot_types = ['uint16','uint16']
+  __slots__ = ['id','position','angle']
+  _slot_types = ['uint8','uint16','uint16']
 
   def __init__(self, *args, **kwds):
     """
@@ -23,7 +24,7 @@ uint16 angle"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       position,angle
+       id,position,angle
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -32,11 +33,14 @@ uint16 angle"""
     if args or kwds:
       super(state, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
+      if self.id is None:
+        self.id = 0
       if self.position is None:
         self.position = 0
       if self.angle is None:
         self.angle = 0
     else:
+      self.id = 0
       self.position = 0
       self.angle = 0
 
@@ -53,7 +57,7 @@ uint16 angle"""
     """
     try:
       _x = self
-      buff.write(_get_struct_2H().pack(_x.position, _x.angle))
+      buff.write(_get_struct_B2H().pack(_x.id, _x.position, _x.angle))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -66,8 +70,8 @@ uint16 angle"""
       end = 0
       _x = self
       start = end
-      end += 4
-      (_x.position, _x.angle,) = _get_struct_2H().unpack(str[start:end])
+      end += 5
+      (_x.id, _x.position, _x.angle,) = _get_struct_B2H().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -81,7 +85,7 @@ uint16 angle"""
     """
     try:
       _x = self
-      buff.write(_get_struct_2H().pack(_x.position, _x.angle))
+      buff.write(_get_struct_B2H().pack(_x.id, _x.position, _x.angle))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -95,8 +99,8 @@ uint16 angle"""
       end = 0
       _x = self
       start = end
-      end += 4
-      (_x.position, _x.angle,) = _get_struct_2H().unpack(str[start:end])
+      end += 5
+      (_x.id, _x.position, _x.angle,) = _get_struct_B2H().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -105,9 +109,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2H = None
-def _get_struct_2H():
-    global _struct_2H
-    if _struct_2H is None:
-        _struct_2H = struct.Struct("<2H")
-    return _struct_2H
+_struct_B2H = None
+def _get_struct_B2H():
+    global _struct_B2H
+    if _struct_B2H is None:
+        _struct_B2H = struct.Struct("<B2H")
+    return _struct_B2H
