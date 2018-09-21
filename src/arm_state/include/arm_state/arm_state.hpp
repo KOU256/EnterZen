@@ -1,8 +1,8 @@
 #ifndef ARM_STATE
 #define ARM_STATE
 
-#define TOPIC_QUEUE_SIZE 100
-#define LOOP_RATE 1
+#define TOPIC_QUEUE_SIZE 100                //トピックキューのサイズ
+#define LOOP_RATE 1                         //パブリッシャーのループ時間
 
 #define PROTOCOL_VERSION 1.0                //Dynamixelのプロトコルのバージョン
 #define DEVICE_NAME "/dev/ttyUSB0"          //USBデバイス名

@@ -7,20 +7,22 @@
 
 /* main関数 */
 int main(int argc, char **argv) {
-    ArmState arm_state[DYNAMIXEL_NUM];                                              //ArmStateクラスのインスタンス
+    ArmState arm_state[DYNAMIXEL_NUM];                                  //ArmStateクラスのインスタンス
     dynamixel::PortHandler * port_handler =
         dynamixel::PortHandler::getPortHandler(DEVICE_NAME);            //PortHandllerクラスのインスタンス
     dynamixel::PacketHandler * packet_handler =
         dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);   //PacketHandlerクラスのインスタンス
-    arm_state::state msg;
+    arm_state::state msg;                                               //メッセージ
+
+    /* Dynamixelの数に合わせてメッセージの配列の要素数を変更 */
     msg.id.resize(DYNAMIXEL_NUM);
     msg.position.resize(DYNAMIXEL_NUM);
     msg.angle.resize(DYNAMIXEL_NUM);
 
+    /* ROS周りの設定 */
     ros::init(argc, argv, "arm_state");
     ros::NodeHandle node_handle;
     ros::Publisher state_publisher = node_handle.advertise<arm_state::state>("joint_state", TOPIC_QUEUE_SIZE);
-
     ros::Rate loop_rate(LOOP_RATE);
 
     /* USBデバイスのポートを開く*/
@@ -38,6 +40,8 @@ int main(int argc, char **argv) {
     else {
         std::cout << "setBaudRate Failed" << std::endl;
     }
+
+    /* メッセージを送信する */
     while(ros::ok()){
         for (int i = FIRST_DXL_ID; i <= THIRD_DXL_ID; i++){
             msg.id[i] = i;
