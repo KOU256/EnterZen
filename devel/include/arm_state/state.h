@@ -24,26 +24,26 @@ struct state_
   typedef state_<ContainerAllocator> Type;
 
   state_()
-    : id(0)
-    , position(0)
-    , angle(0)  {
+    : id()
+    , position()
+    , angle()  {
     }
   state_(const ContainerAllocator& _alloc)
-    : id(0)
-    , position(0)
-    , angle(0)  {
+    : id(_alloc)
+    , position(_alloc)
+    , angle(_alloc)  {
   (void)_alloc;
     }
 
 
 
-   typedef uint8_t _id_type;
+   typedef std::vector<uint8_t, typename ContainerAllocator::template rebind<uint8_t>::other >  _id_type;
   _id_type id;
 
-   typedef uint16_t _position_type;
+   typedef std::vector<uint16_t, typename ContainerAllocator::template rebind<uint16_t>::other >  _position_type;
   _position_type position;
 
-   typedef uint16_t _angle_type;
+   typedef std::vector<uint16_t, typename ContainerAllocator::template rebind<uint16_t>::other >  _angle_type;
   _angle_type angle;
 
 
@@ -80,7 +80,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
+// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
 // {'arm_state': ['/home/kou256/ROS/EnterZen/src/arm_state/msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
@@ -90,12 +90,12 @@ namespace message_traits
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::arm_state::state_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::arm_state::state_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -124,12 +124,12 @@ struct MD5Sum< ::arm_state::state_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "402d479cdb26ccff42ea9316f4bc75ef";
+    return "cc5377a64d7ce3f6a03aaa672d3115bd";
   }
 
   static const char* value(const ::arm_state::state_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x402d479cdb26ccffULL;
-  static const uint64_t static_value2 = 0x42ea9316f4bc75efULL;
+  static const uint64_t static_value1 = 0xcc5377a64d7ce3f6ULL;
+  static const uint64_t static_value2 = 0xa03aaa672d3115bdULL;
 };
 
 template<class ContainerAllocator>
@@ -148,9 +148,9 @@ struct Definition< ::arm_state::state_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "uint8 id\n\
-uint16 position\n\
-uint16 angle\n\
+    return "uint8[] id\n\
+uint16[] position\n\
+uint16[] angle\n\
 ";
   }
 
@@ -190,12 +190,24 @@ struct Printer< ::arm_state::state_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::arm_state::state_<ContainerAllocator>& v)
   {
-    s << indent << "id: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.id);
-    s << indent << "position: ";
-    Printer<uint16_t>::stream(s, indent + "  ", v.position);
-    s << indent << "angle: ";
-    Printer<uint16_t>::stream(s, indent + "  ", v.angle);
+    s << indent << "id[]" << std::endl;
+    for (size_t i = 0; i < v.id.size(); ++i)
+    {
+      s << indent << "  id[" << i << "]: ";
+      Printer<uint8_t>::stream(s, indent + "  ", v.id[i]);
+    }
+    s << indent << "position[]" << std::endl;
+    for (size_t i = 0; i < v.position.size(); ++i)
+    {
+      s << indent << "  position[" << i << "]: ";
+      Printer<uint16_t>::stream(s, indent + "  ", v.position[i]);
+    }
+    s << indent << "angle[]" << std::endl;
+    for (size_t i = 0; i < v.angle.size(); ++i)
+    {
+      s << indent << "  angle[" << i << "]: ";
+      Printer<uint16_t>::stream(s, indent + "  ", v.angle[i]);
+    }
   }
 };
 

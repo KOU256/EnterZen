@@ -7,14 +7,14 @@ import struct
 
 
 class state(genpy.Message):
-  _md5sum = "402d479cdb26ccff42ea9316f4bc75ef"
+  _md5sum = "cc5377a64d7ce3f6a03aaa672d3115bd"
   _type = "arm_state/state"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """uint8 id
-uint16 position
-uint16 angle"""
+  _full_text = """uint8[] id
+uint16[] position
+uint16[] angle"""
   __slots__ = ['id','position','angle']
-  _slot_types = ['uint8','uint16','uint16']
+  _slot_types = ['uint8[]','uint16[]','uint16[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -34,15 +34,15 @@ uint16 angle"""
       super(state, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
       if self.id is None:
-        self.id = 0
+        self.id = b''
       if self.position is None:
-        self.position = 0
+        self.position = []
       if self.angle is None:
-        self.angle = 0
+        self.angle = []
     else:
-      self.id = 0
-      self.position = 0
-      self.angle = 0
+      self.id = b''
+      self.position = []
+      self.angle = []
 
   def _get_types(self):
     """
@@ -56,8 +56,21 @@ uint16 angle"""
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self
-      buff.write(_get_struct_B2H().pack(_x.id, _x.position, _x.angle))
+      _x = self.id
+      length = len(_x)
+      # - if encoded as a list instead, serialize as bytes instead of string
+      if type(_x) in [list, tuple]:
+        buff.write(struct.pack('<I%sB'%length, length, *_x))
+      else:
+        buff.write(struct.pack('<I%ss'%length, length, _x))
+      length = len(self.position)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sH'%length
+      buff.write(struct.pack(pattern, *self.position))
+      length = len(self.angle)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sH'%length
+      buff.write(struct.pack(pattern, *self.angle))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -68,10 +81,26 @@ uint16 angle"""
     """
     try:
       end = 0
-      _x = self
       start = end
-      end += 5
-      (_x.id, _x.position, _x.angle,) = _get_struct_B2H().unpack(str[start:end])
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      self.id = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sH'%length
+      start = end
+      end += struct.calcsize(pattern)
+      self.position = struct.unpack(pattern, str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sH'%length
+      start = end
+      end += struct.calcsize(pattern)
+      self.angle = struct.unpack(pattern, str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -84,8 +113,21 @@ uint16 angle"""
     :param numpy: numpy python module
     """
     try:
-      _x = self
-      buff.write(_get_struct_B2H().pack(_x.id, _x.position, _x.angle))
+      _x = self.id
+      length = len(_x)
+      # - if encoded as a list instead, serialize as bytes instead of string
+      if type(_x) in [list, tuple]:
+        buff.write(struct.pack('<I%sB'%length, length, *_x))
+      else:
+        buff.write(struct.pack('<I%ss'%length, length, _x))
+      length = len(self.position)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sH'%length
+      buff.write(self.position.tostring())
+      length = len(self.angle)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sH'%length
+      buff.write(self.angle.tostring())
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -97,10 +139,26 @@ uint16 angle"""
     """
     try:
       end = 0
-      _x = self
       start = end
-      end += 5
-      (_x.id, _x.position, _x.angle,) = _get_struct_B2H().unpack(str[start:end])
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      self.id = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sH'%length
+      start = end
+      end += struct.calcsize(pattern)
+      self.position = numpy.frombuffer(str[start:end], dtype=numpy.uint16, count=length)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sH'%length
+      start = end
+      end += struct.calcsize(pattern)
+      self.angle = numpy.frombuffer(str[start:end], dtype=numpy.uint16, count=length)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -109,9 +167,3 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_B2H = None
-def _get_struct_B2H():
-    global _struct_B2H
-    if _struct_B2H is None:
-        _struct_B2H = struct.Struct("<B2H")
-    return _struct_B2H

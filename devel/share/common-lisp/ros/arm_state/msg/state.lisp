@@ -10,18 +10,18 @@
   ((id
     :reader id
     :initarg :id
-    :type cl:fixnum
-    :initform 0)
+    :type (cl:vector cl:fixnum)
+   :initform (cl:make-array 0 :element-type 'cl:fixnum :initial-element 0))
    (position
     :reader position
     :initarg :position
-    :type cl:fixnum
-    :initform 0)
+    :type (cl:vector cl:fixnum)
+   :initform (cl:make-array 0 :element-type 'cl:fixnum :initial-element 0))
    (angle
     :reader angle
     :initarg :angle
-    :type cl:fixnum
-    :initform 0))
+    :type (cl:vector cl:fixnum)
+   :initform (cl:make-array 0 :element-type 'cl:fixnum :initial-element 0)))
 )
 
 (cl:defclass state (<state>)
@@ -48,19 +48,61 @@
   (angle m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <state>) ostream)
   "Serializes a message object of type '<state>"
-  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'id)) ostream)
-  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'position)) ostream)
-  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'position)) ostream)
-  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'angle)) ostream)
-  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'angle)) ostream)
+  (cl:let ((__ros_arr_len (cl:length (cl:slot-value msg 'id))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_arr_len) ostream))
+  (cl:map cl:nil #'(cl:lambda (ele) (cl:write-byte (cl:ldb (cl:byte 8 0) ele) ostream))
+   (cl:slot-value msg 'id))
+  (cl:let ((__ros_arr_len (cl:length (cl:slot-value msg 'position))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_arr_len) ostream))
+  (cl:map cl:nil #'(cl:lambda (ele) (cl:write-byte (cl:ldb (cl:byte 8 0) ele) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) ele) ostream))
+   (cl:slot-value msg 'position))
+  (cl:let ((__ros_arr_len (cl:length (cl:slot-value msg 'angle))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_arr_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_arr_len) ostream))
+  (cl:map cl:nil #'(cl:lambda (ele) (cl:write-byte (cl:ldb (cl:byte 8 0) ele) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) ele) ostream))
+   (cl:slot-value msg 'angle))
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <state>) istream)
   "Deserializes a message object of type '<state>"
-    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'id)) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'position)) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'position)) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'angle)) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'angle)) (cl:read-byte istream))
+  (cl:let ((__ros_arr_len 0))
+    (cl:setf (cl:ldb (cl:byte 8 0) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) __ros_arr_len) (cl:read-byte istream))
+  (cl:setf (cl:slot-value msg 'id) (cl:make-array __ros_arr_len))
+  (cl:let ((vals (cl:slot-value msg 'id)))
+    (cl:dotimes (i __ros_arr_len)
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:aref vals i)) (cl:read-byte istream)))))
+  (cl:let ((__ros_arr_len 0))
+    (cl:setf (cl:ldb (cl:byte 8 0) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) __ros_arr_len) (cl:read-byte istream))
+  (cl:setf (cl:slot-value msg 'position) (cl:make-array __ros_arr_len))
+  (cl:let ((vals (cl:slot-value msg 'position)))
+    (cl:dotimes (i __ros_arr_len)
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:aref vals i)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:aref vals i)) (cl:read-byte istream)))))
+  (cl:let ((__ros_arr_len 0))
+    (cl:setf (cl:ldb (cl:byte 8 0) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) __ros_arr_len) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) __ros_arr_len) (cl:read-byte istream))
+  (cl:setf (cl:slot-value msg 'angle) (cl:make-array __ros_arr_len))
+  (cl:let ((vals (cl:slot-value msg 'angle)))
+    (cl:dotimes (i __ros_arr_len)
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:aref vals i)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:aref vals i)) (cl:read-byte istream)))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<state>)))
@@ -71,21 +113,21 @@
   "arm_state/state")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<state>)))
   "Returns md5sum for a message object of type '<state>"
-  "402d479cdb26ccff42ea9316f4bc75ef")
+  "cc5377a64d7ce3f6a03aaa672d3115bd")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'state)))
   "Returns md5sum for a message object of type 'state"
-  "402d479cdb26ccff42ea9316f4bc75ef")
+  "cc5377a64d7ce3f6a03aaa672d3115bd")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<state>)))
   "Returns full string definition for message of type '<state>"
-  (cl:format cl:nil "uint8 id~%uint16 position~%uint16 angle~%~%"))
+  (cl:format cl:nil "uint8[] id~%uint16[] position~%uint16[] angle~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'state)))
   "Returns full string definition for message of type 'state"
-  (cl:format cl:nil "uint8 id~%uint16 position~%uint16 angle~%~%"))
+  (cl:format cl:nil "uint8[] id~%uint16[] position~%uint16[] angle~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <state>))
   (cl:+ 0
-     1
-     2
-     2
+     4 (cl:reduce #'cl:+ (cl:slot-value msg 'id) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ 1)))
+     4 (cl:reduce #'cl:+ (cl:slot-value msg 'position) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ 2)))
+     4 (cl:reduce #'cl:+ (cl:slot-value msg 'angle) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ 2)))
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <state>))
   "Converts a ROS message object to a list"

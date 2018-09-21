@@ -27,19 +27,19 @@ class state {
         this.id = initObj.id
       }
       else {
-        this.id = 0;
+        this.id = [];
       }
       if (initObj.hasOwnProperty('position')) {
         this.position = initObj.position
       }
       else {
-        this.position = 0;
+        this.position = [];
       }
       if (initObj.hasOwnProperty('angle')) {
         this.angle = initObj.angle
       }
       else {
-        this.angle = 0;
+        this.angle = [];
       }
     }
   }
@@ -47,11 +47,11 @@ class state {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type state
     // Serialize message field [id]
-    bufferOffset = _serializer.uint8(obj.id, buffer, bufferOffset);
+    bufferOffset = _arraySerializer.uint8(obj.id, buffer, bufferOffset, null);
     // Serialize message field [position]
-    bufferOffset = _serializer.uint16(obj.position, buffer, bufferOffset);
+    bufferOffset = _arraySerializer.uint16(obj.position, buffer, bufferOffset, null);
     // Serialize message field [angle]
-    bufferOffset = _serializer.uint16(obj.angle, buffer, bufferOffset);
+    bufferOffset = _arraySerializer.uint16(obj.angle, buffer, bufferOffset, null);
     return bufferOffset;
   }
 
@@ -60,16 +60,20 @@ class state {
     let len;
     let data = new state(null);
     // Deserialize message field [id]
-    data.id = _deserializer.uint8(buffer, bufferOffset);
+    data.id = _arrayDeserializer.uint8(buffer, bufferOffset, null)
     // Deserialize message field [position]
-    data.position = _deserializer.uint16(buffer, bufferOffset);
+    data.position = _arrayDeserializer.uint16(buffer, bufferOffset, null)
     // Deserialize message field [angle]
-    data.angle = _deserializer.uint16(buffer, bufferOffset);
+    data.angle = _arrayDeserializer.uint16(buffer, bufferOffset, null)
     return data;
   }
 
   static getMessageSize(object) {
-    return 5;
+    let length = 0;
+    length += object.id.length;
+    length += 2 * object.position.length;
+    length += 2 * object.angle.length;
+    return length + 12;
   }
 
   static datatype() {
@@ -79,15 +83,15 @@ class state {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '402d479cdb26ccff42ea9316f4bc75ef';
+    return 'cc5377a64d7ce3f6a03aaa672d3115bd';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    uint8 id
-    uint16 position
-    uint16 angle
+    uint8[] id
+    uint16[] position
+    uint16[] angle
     `;
   }
 
@@ -101,21 +105,21 @@ class state {
       resolved.id = msg.id;
     }
     else {
-      resolved.id = 0
+      resolved.id = []
     }
 
     if (msg.position !== undefined) {
       resolved.position = msg.position;
     }
     else {
-      resolved.position = 0
+      resolved.position = []
     }
 
     if (msg.angle !== undefined) {
       resolved.angle = msg.angle;
     }
     else {
-      resolved.angle = 0
+      resolved.angle = []
     }
 
     return resolved;

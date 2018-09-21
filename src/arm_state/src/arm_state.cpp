@@ -12,7 +12,10 @@ int main(int argc, char **argv) {
         dynamixel::PortHandler::getPortHandler(DEVICE_NAME);            //PortHandllerクラスのインスタンス
     dynamixel::PacketHandler * packet_handler =
         dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);   //PacketHandlerクラスのインスタンス
-    arm_state::state msg[DYNAMIXEL_NUM];
+    arm_state::state msg;
+    msg.id.resize(DYNAMIXEL_NUM);
+    msg.position.resize(DYNAMIXEL_NUM);
+    msg.angle.resize(DYNAMIXEL_NUM);
 
     ros::init(argc, argv, "arm_state");
     ros::NodeHandle node_handle;
@@ -37,11 +40,11 @@ int main(int argc, char **argv) {
     }
     while(ros::ok()){
         for (int i = FIRST_DXL_ID; i <= THIRD_DXL_ID; i++){
-            msg[i].id = i;
-            msg[i].position = arm_state[i].getPosition(i, port_handler, packet_handler);
-            msg[i].angle = arm_state[i].getAngle();
-            state_publisher.publish(msg[i]);
+            msg.id[i] = i;
+            msg.position[i] = arm_state[i].getPosition(i, port_handler, packet_handler);
+            msg.angle[i] = arm_state[i].getAngle();
         }
+        state_publisher.publish(msg);
         ros::spinOnce();
         loop_rate.sleep();
     }
