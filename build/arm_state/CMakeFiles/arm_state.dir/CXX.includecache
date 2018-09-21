@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/kou256/ROS/EnterZen/devel/include/arm_state/state.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/kou256/ROS/EnterZen/src/arm_state/include/arm_state/arm_state.hpp
 
 /home/kou256/ROS/EnterZen/src/arm_state/src/arm_state.cpp
@@ -17,6 +33,8 @@ ros/ros.h
 -
 arm_state/arm_state.hpp
 /home/kou256/ROS/EnterZen/src/arm_state/src/arm_state/arm_state.hpp
+arm_state/state.h
+/home/kou256/ROS/EnterZen/src/arm_state/src/arm_state/state.h
 
 /opt/ros/kinetic/include/dynamixel_sdk/dynamixel_sdk.h
 group_bulk_read.h
@@ -292,6 +310,10 @@ boost/make_shared.hpp
 cstddef
 -
 memory
+-
+
+/opt/ros/kinetic/include/ros/message_operations.h
+ostream
 -
 
 /opt/ros/kinetic/include/ros/message_traits.h

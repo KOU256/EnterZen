@@ -3,15 +3,22 @@
 #include <dynamixel_sdk/dynamixel_sdk.h>
 #include <ros/ros.h>
 #include "arm_state/arm_state.hpp"
+#include "arm_state/state.h"
 
 /* main関数 */
 int main(int argc, char **argv) {
-    ArmState arm_state[3];                                              //ArmStateクラスのインスタンス
-
+    ArmState arm_state[DYNAMIXEL_NUM];                                              //ArmStateクラスのインスタンス
     dynamixel::PortHandler * port_handler =
         dynamixel::PortHandler::getPortHandler(DEVICE_NAME);            //PortHandllerクラスのインスタンス
     dynamixel::PacketHandler * packet_handler =
         dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);   //PacketHandlerクラスのインスタンス
+    arm_state::state msg[DYNAMIXEL_NUM];
+
+    ros::init(argc, argv, "arm_state");
+    ros::NodeHandle node_handle;
+    ros::Publisher state_publisher = node_handle.advertise<arm_state::state>("joint_state", TOPIC_QUEUE_SIZE);
+
+    ros::Rate loop_rate(LOOP_RATE);
 
     /* USBデバイスのポートを開く*/
     if (port_handler->openPort()) {
@@ -28,13 +35,15 @@ int main(int argc, char **argv) {
     else {
         std::cout << "setBaudRate Failed" << std::endl;
     }
-
-    /* 各Dynamixelの位置と角度を取得して出力 */
-    for (int i = FIRST_DXL_ID; i <= THIRD_DXL_ID; i++){
-        std::cout
-        << "ID:" << i << " "
-        << arm_state[i].getPosition(i, port_handler, packet_handler) << " "
-        << arm_state[i].getAngle() << std::endl;
+    while(ros::ok()){
+        for (int i = FIRST_DXL_ID; i <= THIRD_DXL_ID; i++){
+            msg[i].id = i;
+            msg[i].position = arm_state[i].getPosition(i, port_handler, packet_handler);
+            msg[i].angle = arm_state[i].getAngle();
+            state_publisher.publish(msg[i]);
+        }
+        ros::spinOnce();
+        loop_rate.sleep();
     }
 
     return 0;
