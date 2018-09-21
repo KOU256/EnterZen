@@ -3,6 +3,6 @@ prefix=/home/kou256/ROS/EnterZen/devel
 Name: arm_state
 Description: Description of arm_state
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/kou256/ROS/EnterZen/devel/include
 Libs: -L/home/kou256/ROS/EnterZen/devel/lib 
 Requires: 

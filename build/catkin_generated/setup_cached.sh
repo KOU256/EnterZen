@@ -8,3 +8,4 @@
 
 # modified environment variables
 export PWD="/home/kou256/ROS/EnterZen/build"
+export PYTHONPATH="/home/kou256/ROS/EnterZen/devel/lib/python2.7/dist-packages:$PYTHONPATH"

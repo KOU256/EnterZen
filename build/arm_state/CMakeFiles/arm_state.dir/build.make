@@ -99,8 +99,8 @@ arm_state_EXTERNAL_OBJECTS =
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/librosconsole_backend_interface.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-/home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/libxmlrpcpp.so
+/home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/librostime.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /opt/ros/kinetic/lib/libcpp_common.so
 /home/kou256/ROS/EnterZen/devel/lib/arm_state/arm_state: /usr/lib/x86_64-linux-gnu/libboost_system.so
