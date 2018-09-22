@@ -1,0 +1,8 @@
+prefix=/home/kou256/ROS/EnterZen/install
+
+Name: arm_operate
+Description: Description of arm_operate
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/kou256/ROS/EnterZen/install/lib 
+Requires: 

@@ -266,6 +266,12 @@ arm_controller_BINARY_DIR:STATIC=/home/kou256/ROS/EnterZen/build/arm_controller
 arm_controller_SOURCE_DIR:STATIC=/home/kou256/ROS/EnterZen/src/arm_controller
 
 //Value Computed by CMake
+arm_operate_BINARY_DIR:STATIC=/home/kou256/ROS/EnterZen/build/arm_operate
+
+//Value Computed by CMake
+arm_operate_SOURCE_DIR:STATIC=/home/kou256/ROS/EnterZen/src/arm_operate
+
+//Value Computed by CMake
 arm_state_BINARY_DIR:STATIC=/home/kou256/ROS/EnterZen/build/arm_state
 
 //Value Computed by CMake
@@ -497,7 +503,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
