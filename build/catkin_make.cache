@@ -1,2 +1,2 @@
-arm_controller
+arm_controller:arm_operate:arm_state
 -DCATKIN_DEVEL_PREFIX=/home/kou256/ROS/EnterZen/devel -DCMAKE_INSTALL_PREFIX=/home/kou256/ROS/EnterZen/install -G Unix Makefiles
