@@ -2,7 +2,7 @@
 
 message(STATUS "arm_state: 1 messages, 0 services")
 
-set(MSG_I_FLAGS "-Iarm_state:/home/kou256/ROS/EnterZen/src/arm_state/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Iarm_state:/home/kou256/ROS/EnterZen/src/arm_state/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)

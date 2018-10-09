@@ -1,0 +1,8 @@
+prefix=/home/kou256/ROS/EnterZen/devel
+
+Name: EnterZen_joy
+Description: Description of EnterZen_joy
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/kou256/ROS/EnterZen/devel/lib 
+Requires: 
