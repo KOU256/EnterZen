@@ -1,18 +1,19 @@
 #include<ros/ros.h>
 #include<sensor_msgs/Joy.h>
 #include<std_msgs/Float32MultiArray.h>
+#include"EnterZen_joy/EnterZen_joy.hpp"
 
 void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
     std_msgs::Float32MultiArray axes;
-    axes.data.resize(2);
     ros::NodeHandle nh;
     ros::Publisher joy_pub = nh.advertise<std_msgs::Float32MultiArray>("motor_instructer", 100);
 
+    axes.data.resize(2);
     ros::Rate loop_rate(10);
     while(ros::ok()) {
-        for(int i = 0; i <= 1; i++){
-            if(joy->axes[i] > 0.3 || joy->axes[i] < -0.3){
-                axes.data[i] = joy->axes[i];
+        for(EAxes index : {LEFT_STICK_HOR, LEFT_STICK_VER}){
+            if(joy->axes[index] > 0.3 || joy->axes[index] < -0.3){
+                axes.data[index] = joy->axes[index];
             }
         }
         joy_pub.publish(axes);

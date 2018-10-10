@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/home/kou256/ROS/EnterZen/src/EnterZen_joy/include/EnterZen_joy/EnterZen_joy.hpp
+
 /home/kou256/ROS/EnterZen/src/EnterZen_joy/src/EnterZen_joy.cpp
 ros/ros.h
 -
@@ -13,6 +15,8 @@ sensor_msgs/Joy.h
 -
 std_msgs/Float32MultiArray.h
 -
+EnterZen_joy/EnterZen_joy.hpp
+/home/kou256/ROS/EnterZen/src/EnterZen_joy/src/EnterZen_joy/EnterZen_joy.hpp
 
 /opt/ros/melodic/include/ros/advertise_options.h
 ros/forwards.h
