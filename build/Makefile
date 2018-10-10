@@ -714,6 +714,19 @@ sensor_msgs_generate_messages_nodejs/fast:
 .PHONY : sensor_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named geometry_msgs_generate_messages_lisp
+
+# Build rule for target.
+geometry_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_lisp
+.PHONY : geometry_msgs_generate_messages_lisp
+
+# fast build rule for target.
+geometry_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+.PHONY : geometry_msgs_generate_messages_lisp/fast
+
+#=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_py
 
 # Build rule for target.
@@ -844,17 +857,17 @@ geometry_msgs_generate_messages_nodejs/fast:
 .PHONY : geometry_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named geometry_msgs_generate_messages_lisp
+# Target rules for targets named EnterZen_joy
 
 # Build rule for target.
-geometry_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_lisp
-.PHONY : geometry_msgs_generate_messages_lisp
+EnterZen_joy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 EnterZen_joy
+.PHONY : EnterZen_joy
 
 # fast build rule for target.
-geometry_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-.PHONY : geometry_msgs_generate_messages_lisp/fast
+EnterZen_joy/fast:
+	$(MAKE) -f EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build.make EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build
+.PHONY : EnterZen_joy/fast
 
 #=============================================================================
 # Target rules for targets named arm_controller
@@ -924,6 +937,7 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... diagnostic_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
+	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... diagnostic_msgs_generate_messages_cpp"
 	@echo "... diagnostic_msgs_generate_messages_eus"
@@ -934,7 +948,7 @@ help:
 	@echo "... diagnostic_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
-	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... EnterZen_joy"
 	@echo "... arm_controller"
 .PHONY : help
 

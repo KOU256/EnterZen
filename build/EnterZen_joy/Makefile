@@ -102,6 +102,17 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -123,17 +134,6 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -226,6 +226,21 @@ sensor_msgs_generate_messages_nodejs: EnterZen_joy/CMakeFiles/sensor_msgs_genera
 sensor_msgs_generate_messages_nodejs/fast:
 	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make EnterZen_joy/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
 .PHONY : sensor_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f CMakeFiles/Makefile2 EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_lisp: EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : geometry_msgs_generate_messages_lisp
+
+# fast build rule for target.
+geometry_msgs_generate_messages_lisp/fast:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+.PHONY : geometry_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 EnterZen_joy/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
@@ -378,19 +393,46 @@ geometry_msgs_generate_messages_nodejs/fast:
 .PHONY : geometry_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
-	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f CMakeFiles/Makefile2 EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-.PHONY : EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+EnterZen_joy/CMakeFiles/EnterZen_joy.dir/rule:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f CMakeFiles/Makefile2 EnterZen_joy/CMakeFiles/EnterZen_joy.dir/rule
+.PHONY : EnterZen_joy/CMakeFiles/EnterZen_joy.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_lisp: EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+EnterZen_joy: EnterZen_joy/CMakeFiles/EnterZen_joy.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_lisp
+.PHONY : EnterZen_joy
 
 # fast build rule for target.
-geometry_msgs_generate_messages_lisp/fast:
-	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make EnterZen_joy/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-.PHONY : geometry_msgs_generate_messages_lisp/fast
+EnterZen_joy/fast:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build.make EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build
+.PHONY : EnterZen_joy/fast
+
+src/EnterZen_joy.o: src/EnterZen_joy.cpp.o
+
+.PHONY : src/EnterZen_joy.o
+
+# target to build an object file
+src/EnterZen_joy.cpp.o:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build.make EnterZen_joy/CMakeFiles/EnterZen_joy.dir/src/EnterZen_joy.cpp.o
+.PHONY : src/EnterZen_joy.cpp.o
+
+src/EnterZen_joy.i: src/EnterZen_joy.cpp.i
+
+.PHONY : src/EnterZen_joy.i
+
+# target to preprocess a source file
+src/EnterZen_joy.cpp.i:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build.make EnterZen_joy/CMakeFiles/EnterZen_joy.dir/src/EnterZen_joy.cpp.i
+.PHONY : src/EnterZen_joy.cpp.i
+
+src/EnterZen_joy.s: src/EnterZen_joy.cpp.s
+
+.PHONY : src/EnterZen_joy.s
+
+# target to generate assembly for a file
+src/EnterZen_joy.cpp.s:
+	cd /home/kou256/ROS/EnterZen/build && $(MAKE) -f EnterZen_joy/CMakeFiles/EnterZen_joy.dir/build.make EnterZen_joy/CMakeFiles/EnterZen_joy.dir/src/EnterZen_joy.cpp.s
+.PHONY : src/EnterZen_joy.cpp.s
 
 # Help Target
 help:
@@ -406,6 +448,8 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... diagnostic_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
+	@echo "... test"
+	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... diagnostic_msgs_generate_messages_cpp"
 	@echo "... diagnostic_msgs_generate_messages_eus"
@@ -418,8 +462,10 @@ help:
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... edit_cache"
 	@echo "... geometry_msgs_generate_messages_nodejs"
-	@echo "... geometry_msgs_generate_messages_lisp"
-	@echo "... test"
+	@echo "... EnterZen_joy"
+	@echo "... src/EnterZen_joy.o"
+	@echo "... src/EnterZen_joy.i"
+	@echo "... src/EnterZen_joy.s"
 .PHONY : help
 
 
