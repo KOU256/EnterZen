@@ -10,16 +10,16 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
     ros::NodeHandle nh;
     ros::Publisher joy_pub = nh.advertise<std_msgs::Float32MultiArray>("motor_instructer", 100);
 
-    axes.data.resize(2);
+    axes.data.resize(4);
     ros::Rate loop_rate(10);
 
     while(ros::ok()) {
-        for(EAxes index : {LEFT_STICK_HOR, LEFT_STICK_VER}){
-            if(joy->axes[index] > 0.3 || joy->axes[index] < -0.3){
-                axes.data[index] = joy->axes[index];
-            }
+        for(EAxes index : {LEFT_STICK_HOR, LEFT_STICK_VER}) {
+            axes.data[index] = joy->axes[index];
         }
-        
+        for(EAxes index : {RIGHT_STICK_HOR, RIGHT_STICK_VER}) {
+            axes.data[index - 1] = joy->axes[index];
+        }        
         joy_pub.publish(axes);
         ros::spinOnce();
         loop_rate.sleep();
