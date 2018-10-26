@@ -12,4 +12,18 @@ enum EAxes {
     CROSS_BUTTON_VER,
 };
 
+enum EButtons {
+    A,
+    B,
+    X,
+    Y,
+    L,
+    R,
+    SELECT,
+    START,
+    HOME,
+    L_STICK
+    R_STICK
+}
+
 #endif
