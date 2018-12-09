@@ -66,7 +66,7 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 			if (first_joint_position > 1.57) {first_joint_position = 1.57;}
 
 			target_first += 20;
-			if (target_first > 971) {target_first = 971;}
+			if (target_first > 971) {target_first = 971;} 
 		}
         else if(joy->axes[3] <= -0.5) {
 			first_joint_position -= 0.1;
@@ -82,28 +82,27 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 			if (second_joint_position < -1.57) {second_joint_position = -1.57;}
 
 			target_second += 20;
-			if (target_second > 820) {target_second = 820;}
+			if (target_second > 820) {target_second = 820;} 
 		}
         else if(joy->axes[4] <= -0.5 && joy->buttons[5] == 0) {
 			second_joint_position += 0.1;
 			if (second_joint_position > 1.57) {second_joint_position = 1.57;}
 
 			target_second -= 20;
-			if (target_second < 205) {target_second = 205;}
+			if (target_second < 205) {target_second = 205;} 
 		}
 
 		// Rボタンが押されているとき、右スティックの縦軸に合わせてthird_jointを回転
-        if (joy->axes[4] >= 1.0 && joy->buttons[5] == 1) {
+        if (joy->axes[7] >= 1.0 && joy->buttons[5] == 1) {
 			third_joint_position += 0.1;
 			if (third_joint_position > 0) {third_joint_position = 0;}
 
 			target_third += 20;
 			if (target_second > 971) {target_second = 971;}
 		}
-        else if(joy->axes[4] <= -1.0 && joy->buttons[5] == 1) {
+        else if(joy->axes[7] <= -1.0 && joy->buttons[5] == 1) {
 			third_joint_position -= 0.1;
 			if (third_joint_position < -5.71) {third_joint_position = 5.71;}
-
 
 			target_third -= 20;
 			if (target_second < 45) {target_second = 45;}
@@ -113,7 +112,7 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 		js.position[FIRST_JOINT_INDEX] = first_joint_position;
 		js.position[SECOND_JOINT_INDEX] = second_joint_position;
 		js.position[THIRD_JOINT_INDEX] = third_joint_position;
-
+        
 		// PublisherでPublishする
         joint_pub.publish(js);
 		std::cout << first_joint_position << ',' << second_joint_position << ',' << third_joint_position << std::endl;
@@ -132,7 +131,7 @@ int main(int argc, char **argv){
     ros::init(argc, argv, "arm_controller");
     ros::NodeHandle n;
 	ros::Subscriber joy_input = n.subscribe<sensor_msgs::Joy>("joy", 10, &joyCallback);
-
+	
     ros::spin();
 
     return 0;

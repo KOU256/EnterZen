@@ -104,7 +104,6 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
 			third_joint_position -= 0.1;
 			if (third_joint_position < -5.71) {third_joint_position = 5.71;}
 
-
 			target_third -= 20;
 			if (target_second < 45) {target_second = 45;}
 		}

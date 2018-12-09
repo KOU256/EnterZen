@@ -10,7 +10,7 @@
       </geometry>
       <origin xyz="0 0 0"/>
       <material name="black">
-        <color rgba="1.61 1.86 2.26 2.0"/>
+        <color rgba="161 186 226 2.0"/>
       </material>
     </visual>
   </link>
@@ -22,7 +22,7 @@
       </geometry>
       <origin xyz = "0 0 0" rpy="0 0 0.2"/>
       <material name="black">
-        <color rgba="1.61 1.86 2.26 2.0"/>
+        <color rgba="161 186 226 2.0"/>
       </material>
     </visual>
   </link>
@@ -34,7 +34,7 @@
       </geometry>
       <origin xyz = "0 0 0" rpy="0.17 -0.03 0.16"/>
       <material name="black">
-        <color rgba="1.61 1.86 2.26 2.0"/>
+        <color rgba="161 186 226 2.0"/>
       </material>
     </visual>
   </link>
@@ -46,7 +46,7 @@
       </geometry>
       <origin xyz = "0.04 0 0" rpy="1.57 3.14 0"/>
       <material name="black">
-        <color rgba="1.61 1.86 2.26 2.0"/>
+        <color rgba="161 186 226 2.0"/>
       </material>
     </visual>
   </link>

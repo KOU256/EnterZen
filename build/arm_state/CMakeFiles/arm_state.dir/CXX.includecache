@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/kou256/ROS/EnterZen/devel/include/arm_state/state.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/kou256/ROS/EnterZen/src/arm_state/include/arm_state/arm_state.hpp
 
 /home/kou256/ROS/EnterZen/src/arm_state/src/arm_state.cpp
@@ -167,6 +183,8 @@ rosconsole/macros_generated.h
 /opt/ros/melodic/include/ros/rosconsole/macros_generated.h
 
 /opt/ros/melodic/include/ros/console_backend.h
+ros/macros.h
+-
 
 /opt/ros/melodic/include/ros/datatypes.h
 string
@@ -294,6 +312,10 @@ boost/make_shared.hpp
 cstddef
 -
 memory
+-
+
+/opt/ros/melodic/include/ros/message_operations.h
+ostream
 -
 
 /opt/ros/melodic/include/ros/message_traits.h
