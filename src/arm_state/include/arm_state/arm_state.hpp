@@ -13,7 +13,8 @@
 #define FIRST_DXL_ID 0                      //First Jointで使用しているDynamixelのID
 #define SECOND_DXL_ID 1                     //Second Jointで使用しているDynamixelのID
 #define THIRD_DXL_ID 2                      //Third Jointで使用しているDynamixelのID
-#define DYNAMIXEL_NUM 3
+#define FOURTH_DXL_ID 3                     //Fourth Jointで使用しているDynamixelのID
+#define DYNAMIXEL_NUM 4
 
 #define POSITION_RANGE 1024                 //Dynamixelの稼働範囲(位置)
 #define ANGLE_RANGE 300                     //Dynamixelの可動範囲(角度)
