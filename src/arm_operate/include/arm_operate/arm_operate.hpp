@@ -7,10 +7,11 @@
 #define GOAL_POSITION_ADDR 30               //Goal Positionのアドレス
 #define PRESENT_POSITION_ADDR 36            //Present Positionのアドレス
 
-#define FIRST_DXL_ID 0                      //First Jointで使用しているDynamixelのID
-#define SECOND_DXL_ID 1                     //Second Jointで使用しているDynamixelのID
-#define THIRD_DXL_ID 2                      //Third Jointで使用しているDynamixelのID
-#define DYNAMIXEL_NUM 3
+#define DXL_FIRST_ID 0
+#define DXL_SECOND_ID 1
+#define DXL_THIRD_ID 2
+#define DXL_FOURTH_ID 3
+#define DXL_NUM 4
 
 class ArmOperate {
 private:

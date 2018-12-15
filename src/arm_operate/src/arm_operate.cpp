@@ -8,13 +8,17 @@ int main(int argc, char ** argv) {
         dynamixel::PortHandler::getPortHandler(DEVICE_NAME);            //PortHandllerクラスのインスタンス
     dynamixel::PacketHandler * packet_handler =
         dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);   //PacketHandlerクラスのインスタンス
-    int goal_position;
+    int id, goal_position;
     ArmOperate arm_operate;
     port_handler->openPort();
 	port_handler->setBaudRate(BAUD_RATE);
 
+    std::cout << "id? : ";
+    std::cin >> id;
+
+    std::cout << "position? :";
     std::cin >> goal_position;
-    arm_operate.setGoalPosition(FIRST_DXL_ID, goal_position, port_handler, packet_handler);
+    arm_operate.setGoalPosition(id, goal_position, port_handler, packet_handler);
 
     return 0;
 }
@@ -22,8 +26,8 @@ int main(int argc, char ** argv) {
 int ArmOperate::setGoalPosition(
     int id,
     int goal_position,
-    dynamixel::PortHandler * port,
-    dynamixel::PacketHandler * packet
+    dynamixel::PortHandler *port,
+    dynamixel::PacketHandler *packet
 ) {
     int result;
     uint8_t error;

@@ -1,15 +1,11 @@
 
 #include <iostream>
+#include <unistd.h>
 
 #include "ros/ros.h"
 #include "dynamixel_sdk/dynamixel_sdk.h"
 #include "sensor_msgs/Joy.h"
 #include "sensor_msgs/JointState.h"
-
-#define FIRST_JOINT_INDEX 0
-#define SECOND_JOINT_INDEX 1
-#define THIRD_JOINT_INDEX 2
-#define FOURTH_JOINT_INDEX 3
 
 #define ADDR_MX_TORQUE_ENABLE 24
 #define ADDR_MX_GOAL_POSITION 30
@@ -19,120 +15,116 @@
 #define DEVICE_NAME "/dev/ttyUSB0"
 #define BAUDRATE 9600
 
-#define DXL_FIRST 0
-#define DXL_SECOND 1
-#define DXL_THIRD 2
-#define DXL_FOURTH 3
+#define DXL_FIRST_ID 0
+#define DXL_SECOND_ID 1
+#define DXL_THIRD_ID 2
+#define DXL_FOURTH_ID 3
 #define DXL_NUM 4
-#define DXL_MINIMUM_POTISION_VALUE 0
-#define DCL_MAXIMUM_POSITION_VALUE 1023
+#define DXL_MIN_VALUE 0
+#define DXL_MAX_VALUE 1023
+
+#define JOY_BORDER 0.7
 
 using namespace std;
 
-// float axes[8];
-// int buttons[11];
 int result;
-int target_first = 45;
-int target_second = 512;
-int target_third = 45;
+int target_first = 205;
+int target_second = 500;
+int target_third = 820;
 int target_fourth = 512;
+int robot_state = 0;  // 0:home 1:pipe_in 2:pipe_out 3:return
+int min_angle[DXL_NUM] = {210, 208, 0, 100};
+int max_angle[DXL_NUM] = {822, 500, 820, 840};
 
 uint8_t error;
 dynamixel::PortHandler *port_handler = dynamixel::PortHandler::getPortHandler(DEVICE_NAME);
 dynamixel::PacketHandler *packet_handler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
 
-void joyCallback(const sensor_msgs::Joy::ConstPtr joy) {
-    static double first_joint_position = 0;    // first_jointの位置
-    static double second_joint_position = 0;   // second_jointの位置
-    static double third_joint_position = 0;    // third_jointの位置
-    static double fourch_joint_postion = 0;    // fourth_jointの位置
+void changeDxlAngle(int id, int target_angle) {
+    if (target_angle < min_angle[id])
+        target_angle = min_angle[id];
+    else if (target_angle > max_angle[id])
+        target_angle = max_angle[id];
 
-    ros::NodeHandle nh;    // NodeHandleクラスのインスタンス
-    ros::Publisher joint_pub = nh.advertise<sensor_msgs::JointState>("joint_states", 1000);    // joint_statesへのPublisher
+    result = packet_handler->write2ByteTxRx(port_handler, id, ADDR_MX_GOAL_POSITION, target_angle, &error);
+}
 
-    ros::Rate loop_rate(10);
-    while (ros::ok()) {
-        sensor_msgs::JointState js;    // JointStateクラスのインスタンス
+int moveCameraToHome() {
+    changeDxlAngle(DXL_THIRD_ID, 512);
+    changeDxlAngle(DXL_FOURTH_ID, 512);
+    usleep(500000);
+    changeDxlAngle(DXL_SECOND_ID, 208);
+    usleep(500000);
+    changeDxlAngle(DXL_FIRST_ID, 210);
+    usleep(500000);
+    changeDxlAngle(DXL_SECOND_ID, 500);
+    changeDxlAngle(DXL_THIRD_ID, 820);
+    return 0;
+}
 
-        js.header.stamp = ros::Time::now();
+int moveCameraToPipeIn() {
+    changeDxlAngle(DXL_THIRD_ID, 750);
+    changeDxlAngle(DXL_FOURTH_ID, 450);
+    return 1;
+}
 
-        // URDFで作成したモデルのjointの数に合わせる
-        js.name.resize(DXL_NUM);
-        js.position.resize(DXL_NUM);
+int moveCameraToPipeOut() {
+    changeDxlAngle(DXL_SECOND_ID, 300);
+    changeDxlAngle(DXL_THIRD_ID, 512);
+    changeDxlAngle(DXL_FOURTH_ID, 512);
+    usleep(500000);
+    changeDxlAngle(DXL_FIRST_ID, 822);
+    usleep(500000);
+    changeDxlAngle(DXL_THIRD_ID, 45);
+    return 2;
+}
 
-        // URDFで作成したモデルに合わせた名前をつける
-        js.name[FIRST_JOINT_INDEX] = "first_joint";
-        js.name[SECOND_JOINT_INDEX] = "second_joint";
-        js.name[THIRD_JOINT_INDEX] = "third_joint";
-        js.name[FOURTH_JOINT_INDEX] = "fourth_joint";
+int moveCameraToReturn() {
+    changeDxlAngle(DXL_SECOND_ID, 450);
+    changeDxlAngle(DXL_THIRD_ID, 720);
+    changeDxlAngle(DXL_FOURTH_ID, 450);
+    return 3;
+}
 
-        // 右スティックの横軸に合わせてfirst_jointを回転
-        if (joy->axes[3] >= 0.7) {
-            first_joint_position += 0.1;
-            if (first_joint_position > 1.57) {first_joint_position = 1.57;}
-
-            target_first += 20;
-            if (target_first > 971) {target_first = 971;}
+void joyCallback(const sensor_msgs::Joy::ConstPtr joy)
+{
+    if (joy->buttons[8]) {
+        robot_state = moveCameraToHome();
+    }
+    else if (joy->buttons[7]) {
+        if (robot_state == 0) {
+            robot_state = moveCameraToPipeIn();
         }
-        else if(joy->axes[3] <= -0.7) {
-            first_joint_position -= 0.1;
-            if (first_joint_position < -3.14) {first_joint_position = -3.14;}
-
-            target_first -= 20;
-            if (target_first < 45) {target_first = 45;}
+        if (robot_state == 2) {
+            robot_state = moveCameraToReturn();
         }
-
-        // Rボタンが押されていないとき、右スティックの縦軸に合わせてsecond_jointを回転
-        if (joy->buttons[5] == 0) {
-            if (joy->axes[4] >= 0.7) {
-                second_joint_position -= 0.1;
-                if (second_joint_position < -1.57) {second_joint_position = -1.57;}
-
-                target_second += 20;
-                if (target_second > 820) {target_second = 820;}
+    }
+    else if (joy->buttons[6]) {
+        if (robot_state == 1) {
+            robot_state = moveCameraToPipeOut();
+        }
+    }
+    else if (joy->buttons[5]) {
+        if (joy->axes[4] >= JOY_BORDER) {
+            if (robot_state == 2) {
+                target_fourth -= 16;
+                changeDxlAngle(DXL_FOURTH_ID, target_fourth);
             }
-            else if(joy->axes[4] <= -0.7) {
-                second_joint_position += 0.1;
-                if (second_joint_position > 1.57) {second_joint_position = 1.57;}
-
-                target_second -= 20;
-                if (target_second < 205) {target_second = 205;}
+            else if (robot_state == 1 || robot_state == 3) {
+                target_fourth += 16;
+                changeDxlAngle(DXL_FOURTH_ID, target_fourth);
             }
         }
-        // Rボタンが押されているとき、右スティックの縦軸に合わせてthird_jointを回転
-        else if (joy->buttons[5] == 1) {
-                if (joy->axes[4] >= 0.7 && joy->buttons[5] == 1) {
-                    third_joint_position += 0.1;
-                if (third_joint_position > 0) {third_joint_position = 0;}
-
-                target_third += 20;
-                if (target_second > 971) {target_second = 971;}
+        if (joy->axes[4] <= -JOY_BORDER) {
+            if (robot_state == 2) {
+                target_fourth += 16;
+                changeDxlAngle(DXL_FOURTH_ID, target_fourth);
             }
-            else if(joy->axes[4] <= -0.7 && joy->buttons[5] == 1) {
-                third_joint_position -= 0.1;
-                if (third_joint_position < -5.71) {third_joint_position = 5.71;}
-
-
-                target_third -= 20;
-                if (target_second < 45) {target_second = 45;}
+            else if (robot_state == 1 || robot_state == 3) {
+                target_fourth -= 16;
+                changeDxlAngle(DXL_FOURTH_ID, target_fourth);
             }
         }
-
-
-        // 各jointのpositonを代入
-        js.position[FIRST_JOINT_INDEX] = first_joint_position;
-        js.position[SECOND_JOINT_INDEX] = second_joint_position;
-        js.position[THIRD_JOINT_INDEX] = third_joint_position;
-
-        // PublisherでPublishする
-        joint_pub.publish(js);
-        std::cout << first_joint_position << ',' << second_joint_position << ',' << third_joint_position << std::endl;
-        result = packet_handler->write2ByteTxRx(port_handler,DXL_FIRST, ADDR_MX_GOAL_POSITION, target_first, &error);
-        result = packet_handler->write2ByteTxRx(port_handler,DXL_SECOND, ADDR_MX_GOAL_POSITION, target_second, &error);
-        result = packet_handler->write2ByteTxRx(port_handler,DXL_THIRD, ADDR_MX_GOAL_POSITION, target_third, &error);
-        result = packet_handler->write2ByteTxRx(port_handler, DXL_FOURTH, ADDR_MX_GOAL_POSITION, target_fourth, &error);
-        ros::spinOnce();
-        loop_rate.sleep();
     }
 }
 

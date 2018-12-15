@@ -7,17 +7,16 @@
 
 /* main関数 */
 int main(int argc, char **argv) {
-    ArmState arm_state[DYNAMIXEL_NUM];                                  //ArmStateクラスのインスタンス
+    ArmState arm_state[DXL_NUM];
     dynamixel::PortHandler * port_handler =
-        dynamixel::PortHandler::getPortHandler(DEVICE_NAME);            //PortHandllerクラスのインスタンス
+        dynamixel::PortHandler::getPortHandler(DEVICE_NAME);
     dynamixel::PacketHandler * packet_handler =
-        dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);   //PacketHandlerクラスのインスタンス
-    arm_state::state msg;                                               //メッセージ
+        dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
+    arm_state::state msg;
 
-    /* Dynamixelの数に合わせてメッセージの配列の要素数を変更 */
-    msg.id.resize(DYNAMIXEL_NUM);
-    msg.position.resize(DYNAMIXEL_NUM);
-    msg.angle.resize(DYNAMIXEL_NUM);
+    msg.id.resize(DXL_NUM);
+    msg.position.resize(DXL_NUM);
+    msg.angle.resize(DXL_NUM);
 
     /* ROS周りの設定 */
     ros::init(argc, argv, "arm_state");
@@ -43,7 +42,7 @@ int main(int argc, char **argv) {
 
     /* メッセージを送信する */
     while(ros::ok()){
-        for (int i = FIRST_DXL_ID; i <= THIRD_DXL_ID; i++){
+        for (int i = DXL_FIRST_ID; i <= DXL_FOURTH_ID; i++){
             msg.id[i] = i;
             msg.position[i] = arm_state[i].getPosition(i, port_handler, packet_handler);
             msg.angle[i] = arm_state[i].getAngle();
