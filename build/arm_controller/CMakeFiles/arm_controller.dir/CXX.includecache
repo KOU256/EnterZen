@@ -9,6 +9,8 @@
 /home/kou256/ROS/EnterZen/src/arm_controller/src/arm_controller.cpp
 iostream
 -
+unistd.h
+-
 ros/ros.h
 /home/kou256/ROS/EnterZen/src/arm_controller/src/ros/ros.h
 dynamixel_sdk/dynamixel_sdk.h
